@@ -1,0 +1,18 @@
+.searchInput {
+  border-radius: 5px;
+}
+
+.searchButtonWrapper {
+  margin-left: 2px;
+}
+
+.searchButton {
+  color: black;
+  margin-left: 3px;
+}
+
+
+.header_boxed .box_wrap {
+  padding: 5px 5px;
+  border-bottom: 2px solid #ebe5f7;
+}
