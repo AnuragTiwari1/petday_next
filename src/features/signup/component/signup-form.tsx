@@ -1,8 +1,10 @@
 "use client";
 
+import { ISignupForm } from "@/definition";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as z from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import router from "next/router";
 
 // Define validation schema using Zod
 const SignupSchema = z.object({
@@ -15,17 +17,28 @@ const SignupSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters long."),
 });
 
-export default function SignupForm() {
+export default function SignupForm({ doSignup }) {
   const initialValues = {
     fname: "",
     lname: "",
     email: "",
     mobile: "",
     password: "",
-  };
+  } satisfies ISignupForm;
 
-  const handleSubmit = (values) => {
-    console.log("Form Submitted Successfully:", values);
+  const handleSubmit = async (values: ISignupForm, { setSubmitting }) => {
+    try {
+      const response = await doSignup(values);
+      if (response.status === "success") {
+        router.push("/login");
+      } else {
+        alert(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
