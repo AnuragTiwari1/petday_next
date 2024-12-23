@@ -2,35 +2,26 @@
 
 import { ISignupForm } from "@/definition";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as z from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import router from "next/router";
+import { SignupSchema } from "../form-schema";
+import { useRouter } from "next/navigation";
 
-// Define validation schema using Zod
-const SignupSchema = z.object({
-  fname: z.string().min(1, "First Name is required."),
-  lname: z.string().min(1, "Last Name is required."),
-  email: z.string().email("Invalid email address."),
-  mobile: z
-    .string()
-    .regex(/^\d{10}$/, "Mobile number must be exactly 10 digits."),
-  password: z.string().min(6, "Password must be at least 6 characters long."),
-});
+const initialValues = {
+  fname: "",
+  lname: "",
+  email: "",
+  mobile: "",
+  password: "",
+} satisfies ISignupForm;
 
 export default function SignupForm({ doSignup }) {
-  const initialValues = {
-    fname: "",
-    lname: "",
-    email: "",
-    mobile: "",
-    password: "",
-  } satisfies ISignupForm;
+  const router = useRouter();
 
   const handleSubmit = async (values: ISignupForm, { setSubmitting }) => {
     try {
       const response = await doSignup(values);
       if (response.status === "success") {
-        router.push("/login");
+        router.replace("/login");
       } else {
         alert(response.message);
       }

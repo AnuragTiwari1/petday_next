@@ -1,9 +1,10 @@
-import Hero from "@/features/signup/component/hero";
+import Hero from "@/features/login/component/hero";
 import styles from "./page.module.css";
 import HeaderNoAuth from "@/components/header-noauth";
-import SignupForm from "@/features/signup/component/signup-form";
-import { signup } from "@/features/signup/actions";
+import LoginForm from "@/features/login/component/form";
+import { login } from "@/features/login/actions";
 import InfoSection from "@/components/info-section";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -16,8 +17,9 @@ export default function Home() {
       <HeaderNoAuth />
       <main className={`${styles.main}`}>
         <Hero />
-        <SignupForm doSignup={signup} />
+        <LoginForm doLogin={login} />
         <InfoSection />
+        <Footer />
       </main>
     </div>
   );
